@@ -49,7 +49,7 @@ python dokumentasi.py
 ```
 cd path_to_autodoc
 
-pyinstaller -F -w -i icon.app dokumentasi.py
+pyinstaller -F -w -i icon.ico dokumentasi.py
 ```
 * Executable created but there is an error
 * Edit dokumentasi.spec
@@ -57,7 +57,7 @@ pyinstaller -F -w -i icon.app dokumentasi.py
 * (Windows) Change ``` datas=[] ``` to ``` datas=[('templates', 'docx\\templates')] ```
 * Run this
 ```
-pyinstaller -F -w -i icon.app dokumentasi.spec
+pyinstaller -F -w -i icon.ico dokumentasi.spec
 ```
 * Executable created and ready to use
 
