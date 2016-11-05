@@ -61,6 +61,6 @@ pyinstaller -F -w -i icon.app dokumentasi.spec
 ```
 * Executable created and ready to use
 
-### Contact ###
+## Contact ##
 
 * [hanreev@gmail.com](mailto:hanreev@gmail.com)
