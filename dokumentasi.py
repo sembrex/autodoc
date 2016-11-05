@@ -24,21 +24,29 @@ class Dokumentasi(QtGui.QMainWindow, Ui_Main):
 	def __init__(self):
 		super(Dokumentasi, self).__init__()
 		self.setupUi(self)
+		self.prepareUi()
 
-		self.setWindowTitle('AutoDoc v1.1 - Karogis')
-		self.logger('====================================')
-		self.logger('||          *****            www.karogis.com            *****         ||')
-		self.logger('====================================\n\n\n')
-
-		self.logVisible = False
-		self.toggleLog()
-
-		self.statusbar.showMessage('Siap')
 		self.btnInput.clicked.connect(self.browseInput)
 		self.btnOutput.clicked.connect(self.browseOutput)
 		self.btnExit.clicked.connect(self.close)
 		self.btnStart.clicked.connect(self.start)
 		self.btnLog.clicked.connect(self.toggleLog)
+
+
+	def prepareUi(self):
+		self.setWindowTitle('AutoDoc v1.1 - Karogis')
+		self.mTop.setValidator(QtGui.QDoubleValidator(0, 10, 2, self))
+		self.mBottom.setValidator(QtGui.QDoubleValidator(0, 10, 2, self))
+		self.mLeft.setValidator(QtGui.QDoubleValidator(0, 10, 2, self))
+		self.mRight.setValidator(QtGui.QDoubleValidator(0, 10, 2, self))
+
+		self.logger('====================================')
+		self.logger('||          *****            www.karogis.com            *****         ||')
+		self.logger('====================================\n\n')
+
+		self.logVisible = False
+		self.toggleLog()
+		self.statusbar.showMessage('Siap')
 
 
 	def browseInput(self):
@@ -92,6 +100,16 @@ class Dokumentasi(QtGui.QMainWindow, Ui_Main):
 			self.showDialog('error', 'Kesalahan!', 'Tidak ditemukan foto')
 			return
 
+		top_margin = float(self.mTop.text()) if self.mTop.text() != '' else 2.0
+		bottom_margin = float(self.mBottom.text()) if self.mBottom.text() != '' else 1.5
+		left_margin = float(self.mLeft.text()) if self.mLeft.text() != '' else 3.0
+		right_margin = float(self.mRight.text()) if self.mRight.text() != '' else 1.5
+
+		self.logger('\nMenggunakan pengaturan jarak: Atas = ' + str(top_margin) +
+						'cm; Bawah = ' + str(bottom_margin) +
+						'cm; Kiri = ' + str(left_margin) +
+						'cm; Kanan = ' + str(right_margin) + 'cm')
+
 		self.doc = Document()
 
 		try:
@@ -101,8 +119,9 @@ class Dokumentasi(QtGui.QMainWindow, Ui_Main):
 			self.showDialog('error', 'Kesalahan', e.strerror)
 			return
 
-		self.logger('\n\nMemproses...')
-		self.logger('Ngopi sek coy...')
+		QtGui.QApplication.setOverrideCursor(QtGui.QCursor(QtCore.Qt.WaitCursor))
+		self.logger('\n\nMemulai Proses...')
+		self.logger('Ngopi sek coy...\n\n')
 		self.statusbar.showMessage('Ngopi sek coy...')
 		self.btnStart.setText('Udud dulu...')
 		self.btnStart.setEnabled(False)
@@ -114,10 +133,10 @@ class Dokumentasi(QtGui.QMainWindow, Ui_Main):
 		QtGui.QApplication.processEvents()
 
 		for section in self.doc.sections:
-			section.top_margin = Cm(1.5)
-			section.bottom_margin = Cm(1.5)
-			section.left_margin = Cm(3.0)
-			section.right_margin = Cm(1.5)
+			section.top_margin = Cm(top_margin)
+			section.bottom_margin = Cm(bottom_margin)
+			section.left_margin = Cm(left_margin)
+			section.right_margin = Cm(right_margin)
 			section.page_width = Inches(8.267)
 			section.page_height = Inches(11.692)
 
@@ -126,6 +145,8 @@ class Dokumentasi(QtGui.QMainWindow, Ui_Main):
 		self.insertPictures(directory)
 
 		QtGui.QApplication.processEvents()
+
+		QtGui.QApplication.restoreOverrideCursor()
 
 		try:
 			self.doc.save(str(self.outputFolder.text()))
@@ -150,8 +171,10 @@ class Dokumentasi(QtGui.QMainWindow, Ui_Main):
 	def insertPictures(self, directory):
 		counter = 0
 
+		titlePrefix = str(self.titlePrefix.text()) + ' ' if self.titlePrefix.text() != '' else ''
+
 		if self.countPictures(directory) > 0:
-			heading = self.doc.add_heading(os.path.basename(directory).upper())
+			heading = self.doc.add_heading(titlePrefix + os.path.basename(directory).upper())
 			heading.alignment = WD_ALIGN_PARAGRAPH.CENTER
 			heading_format = heading.paragraph_format
 			heading_format.space_before = Pt(0)
@@ -164,6 +187,11 @@ class Dokumentasi(QtGui.QMainWindow, Ui_Main):
 				if (file.lower().endswith('.jpg') or file.lower().endswith('.jpeg') or file.lower().endswith('.png')) :
 					if counter % 6 == 0 and counter != 0:
 						self.doc.add_page_break()
+						h = self.doc.add_heading(titlePrefix + os.path.basename(directory).upper())
+						h.alignment = WD_ALIGN_PARAGRAPH.CENTER
+						hf = h.paragraph_format
+						hf.space_before = Pt(0)
+						hf.space_after = Pt(24)
 						table = self.doc.add_table(rows=1, cols=2)
 						cells = table.rows[0].cells
 					elif counter % 2 == 0 and counter != 0:
@@ -216,7 +244,7 @@ class Dokumentasi(QtGui.QMainWindow, Ui_Main):
 	def openFile(self, reply):
 		if reply == 1:
 			try:
-				os.system('start ' + str(self.outputFolder.text()))
+				os.startfile(str(self.outputFolder.text()))
 				QtGui.QApplication.processEvents()
 			except Exception as e:
 				self.showDialog('error', 'Kesalahan', e.strerror)

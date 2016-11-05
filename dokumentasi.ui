@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>500</width>
-    <height>520</height>
+    <height>576</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -21,10 +21,7 @@
    <layout class="QVBoxLayout" name="verticalLayout_2">
     <item>
      <layout class="QGridLayout" name="gridLayout_2">
-      <item row="0" column="1">
-       <widget class="QLineEdit" name="inputFolder"/>
-      </item>
-      <item row="1" column="2">
+      <item row="1" column="9">
        <widget class="QToolButton" name="btnOutput">
         <property name="cursor">
          <cursorShape>PointingHandCursor</cursorShape>
@@ -41,17 +38,7 @@
         </property>
        </widget>
       </item>
-      <item row="1" column="1">
-       <widget class="QLineEdit" name="outputFolder"/>
-      </item>
-      <item row="1" column="0">
-       <widget class="QLabel" name="label_2">
-        <property name="text">
-         <string>File Hasil</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="2">
+      <item row="0" column="9">
        <widget class="QToolButton" name="btnInput">
         <property name="cursor">
          <cursorShape>PointingHandCursor</cursorShape>
@@ -60,6 +47,96 @@
          <string>...</string>
         </property>
        </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="label_2">
+        <property name="text">
+         <string>File Hasil</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0">
+       <widget class="QLabel" name="label_4">
+        <property name="text">
+         <string>Prefix Judul</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="2">
+       <widget class="QLineEdit" name="mTop">
+        <property name="text">
+         <string>2</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="7">
+       <widget class="QLabel" name="label_8">
+        <property name="text">
+         <string>Kanan</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="6">
+       <widget class="QLineEdit" name="mLeft">
+        <property name="text">
+         <string>3</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="8">
+       <widget class="QLineEdit" name="mRight">
+        <property name="text">
+         <string>1.5</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="5">
+       <widget class="QLabel" name="label_5">
+        <property name="text">
+         <string>Kiri</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="4">
+       <widget class="QLineEdit" name="mBottom">
+        <property name="text">
+         <string>1.5</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="0">
+       <widget class="QLabel" name="label_6">
+        <property name="text">
+         <string>Jarak (cm)</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="3">
+       <widget class="QLabel" name="label_7">
+        <property name="text">
+         <string notr="true">Bawah</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="1">
+       <widget class="QLabel" name="label_9">
+        <property name="text">
+         <string>Atas</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1" colspan="8">
+       <widget class="QLineEdit" name="titlePrefix">
+        <property name="text">
+         <string>DOKUMENTASI</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1" colspan="8">
+       <widget class="QLineEdit" name="outputFolder"/>
+      </item>
+      <item row="0" column="1" colspan="8">
+       <widget class="QLineEdit" name="inputFolder"/>
       </item>
      </layout>
     </item>
@@ -142,6 +219,15 @@
   <tabstop>btnInput</tabstop>
   <tabstop>outputFolder</tabstop>
   <tabstop>btnOutput</tabstop>
+  <tabstop>titlePrefix</tabstop>
+  <tabstop>mTop</tabstop>
+  <tabstop>mBottom</tabstop>
+  <tabstop>mLeft</tabstop>
+  <tabstop>mRight</tabstop>
+  <tabstop>btnLog</tabstop>
+  <tabstop>btnStart</tabstop>
+  <tabstop>btnExit</tabstop>
+  <tabstop>logs</tabstop>
  </tabstops>
  <resources>
   <include location="resources.qrc"/>
