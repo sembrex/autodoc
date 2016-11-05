@@ -81,12 +81,17 @@ pyinstaller -F -w -i folder.ico dokumentasi.spec
 * Add margins option
 * Add title to every page
 * Changing cursor shape when processing
+* Add organization banner
+* Add open target file when finished
+* Check whether the target file is writable or not before processing
 
 #### v1.1 ###
 
 * SKIPPED
 * Fix application icon
 * Fix margins
+* Add progress bar
+* Limit save file extension to .docx
 
 #### v1.0 ###
 

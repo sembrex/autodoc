@@ -34,7 +34,7 @@ class Dokumentasi(QtGui.QMainWindow, Ui_Main):
 
 
 	def prepareUi(self):
-		self.setWindowTitle('AutoDoc v1.1 - Karogis')
+		self.setWindowTitle('AutoDoc v1.2 - Karogis')
 		self.mTop.setValidator(QtGui.QDoubleValidator(0, 10, 2, self))
 		self.mBottom.setValidator(QtGui.QDoubleValidator(0, 10, 2, self))
 		self.mLeft.setValidator(QtGui.QDoubleValidator(0, 10, 2, self))
