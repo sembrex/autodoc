@@ -1,4 +1,4 @@
-# AUTODOC #
+# AUTODOC v1.2 #
 
 Autodoc is GUI application for making photos documentation folder by folder in .docx file automatically.
 
@@ -72,3 +72,29 @@ pyinstaller -F -w -i folder.ico dokumentasi.spec
 ## Contact ##
 
 * [hanreev@gmail.com](mailto:hanreev@gmail.com)
+
+## Changelog ##
+
+#### v1.2 ###
+
+* Add title prefix option
+* Add margins option
+* Add title to every page
+* Changing cursor shape when processing
+
+#### v1.1 ###
+
+* SKIPPED
+* Fix application icon
+* Fix margins
+
+#### v1.0 ###
+
+* First release
+* Create .docx document
+* Find available pictures in source directory and its subdirectories
+* Add heading to the document using directory name
+* Optimalize pictures
+* Add pictures to the document
+* Save the document
+* Logging all actions
