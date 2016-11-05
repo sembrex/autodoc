@@ -42,7 +42,7 @@ class Dokumentasi(QtGui.QMainWindow, Ui_Main):
 
 
 	def browseInput(self):
-		directory = QtGui.QFileDialog.getExistingDirectory(self)
+		directory = QtGui.QFileDialog.getExistingDirectory(self, 'Pilih Folder')
 		if directory:
 			self.inputFolder.setText(directory)
 			self.logger('Folder Sumber: ' + directory)
@@ -78,11 +78,8 @@ class Dokumentasi(QtGui.QMainWindow, Ui_Main):
 
 
 	def browseOutput(self):
-		file = QtGui.QFileDialog.getSaveFileName(self)
+		file = QtGui.QFileDialog.getSaveFileName(self, 'Simpan Sebagai', '', 'Word Document (*.docx)')
 		if file:
-			if os.path.splitext(str(file))[1] != '.docx':
-				file = file + '.docx'
-
 			self.outputFolder.setText(file)
 			self.logger('File Hasil: ' + file)
 
