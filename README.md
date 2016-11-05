@@ -61,6 +61,14 @@ pyinstaller -F -w -i icon.app dokumentasi.spec
 ```
 * Executable created and ready to use
 
+## References ##
+
+* [Python 2.7](https://docs.python.org/2/)
+* [PyQt4](http://pyqt.sourceforge.net/Docs/PyQt4/index.html)
+* [python-docx](https://python-docx.readthedocs.io/en/latest/)
+* [Pillow](https://python-pillow.org/)
+* [PyInstaller](http://www.pyinstaller.org/)
+
 ## Contact ##
 
 * [hanreev@gmail.com](mailto:hanreev@gmail.com)
