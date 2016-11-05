@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file '.\dokumentasi.ui'
+# Form implementation generated from reading ui file 'dokumentasi.ui'
 #
 # Created by: PyQt4 UI code generator 4.11.4
 #
@@ -27,7 +27,7 @@ class Ui_MainWindow(object):
         MainWindow.setObjectName(_fromUtf8("MainWindow"))
         MainWindow.resize(500, 520)
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap(_fromUtf8(":/app.ico")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap(_fromUtf8(":/icon/folder.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         MainWindow.setWindowIcon(icon)
         self.centralwidget = QtGui.QWidget(MainWindow)
         self.centralwidget.setObjectName(_fromUtf8("centralwidget"))
@@ -72,6 +72,10 @@ class Ui_MainWindow(object):
         self.logs.setObjectName(_fromUtf8("logs"))
         self.verticalLayout_3.addWidget(self.logs)
         self.verticalLayout_2.addWidget(self.widget)
+        self.progressBar = QtGui.QProgressBar(self.centralwidget)
+        self.progressBar.setProperty("value", 0)
+        self.progressBar.setObjectName(_fromUtf8("progressBar"))
+        self.verticalLayout_2.addWidget(self.progressBar)
         self.btnStart = QtGui.QPushButton(self.centralwidget)
         self.btnStart.setMinimumSize(QtCore.QSize(0, 50))
         font = QtGui.QFont()

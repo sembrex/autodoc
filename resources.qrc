@@ -1,5 +1,5 @@
 <RCC>
-  <qresource prefix="/">
-    <file>app.ico</file>
+  <qresource prefix="icon">
+    <file>folder.png</file>
   </qresource>
 </RCC>

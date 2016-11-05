@@ -11,7 +11,6 @@ from PIL import Image
 from StringIO import StringIO
 
 import dokumentasi_ui
-import resources_rc
 
 Ui_Main = dokumentasi_ui.Ui_MainWindow
 
@@ -25,6 +24,11 @@ class Dokumentasi(QtGui.QMainWindow, Ui_Main):
 	def __init__(self):
 		super(Dokumentasi, self).__init__()
 		self.setupUi(self)
+
+		self.setWindowTitle('AutoDoc v1.1 - Karogis')
+		self.logger('====================================')
+		self.logger('||          *****            www.karogis.com            *****         ||')
+		self.logger('====================================\n\n\n')
 
 		self.logVisible = False
 		self.toggleLog()
@@ -91,15 +95,26 @@ class Dokumentasi(QtGui.QMainWindow, Ui_Main):
 			self.showDialog('error', 'Kesalahan!', 'Tidak ditemukan foto')
 			return
 
-		self.logger('Memproses...')
-		self.statusbar.showMessage('Memproses...')
-		self.btnStart.setText('Memproses...')
+		self.doc = Document()
+
+		try:
+			self.doc.save(str(self.outputFolder.text()))
+		except Exception as e:
+			self.logger('KESALAHAN: ' + e.strerror)
+			self.showDialog('error', 'Kesalahan', e.strerror)
+			return
+
+		self.logger('\n\nMemproses...')
+		self.logger('Ngopi sek coy...')
+		self.statusbar.showMessage('Ngopi sek coy...')
+		self.btnStart.setText('Udud dulu...')
 		self.btnStart.setEnabled(False)
 		self.btnExit.setEnabled(False)
+		self.progressBar.setMaximum(self.images)
+		self.progressBar.setValue(0)
+		self.progressCounter = 0
 
 		QtGui.QApplication.processEvents()
-
-		self.doc = Document()
 
 		for section in self.doc.sections:
 			section.top_margin = Cm(1.5)
@@ -117,7 +132,7 @@ class Dokumentasi(QtGui.QMainWindow, Ui_Main):
 
 		try:
 			self.doc.save(str(self.outputFolder.text()))
-		except IOError as e:
+		except Exception as e:
 			self.logger('KESALAHAN: ' + e.strerror)
 			self.statusbar.showMessage('Siap')
 			self.btnStart.setText('Mulai')
@@ -130,7 +145,9 @@ class Dokumentasi(QtGui.QMainWindow, Ui_Main):
 			self.btnStart.setText('Mulai')
 			self.btnStart.setEnabled(True)
 			self.btnExit.setEnabled(True)
-			self.showDialog('info', 'Selesai', 'Dokumentasi berhasil dibuat.')
+			self.showDialog('info', 'Selesai coy...', 'Dokumentasi berhasil dibuat.\nBuka file?',
+				[('Tidak', QtGui.QMessageBox.NoRole), ('Ya', QtGui.QMessageBox.YesRole)],
+				self.openFile)
 
 
 	def insertPictures(self, directory):
@@ -156,6 +173,8 @@ class Dokumentasi(QtGui.QMainWindow, Ui_Main):
 						cells = table.add_row().cells
 
 					self.logger('Memproses foto ' + file)
+					self.progressCounter += 1
+					self.progressBar.setValue(self.progressCounter)
 					QtGui.QApplication.processEvents()
 
 					img = Image.open(os.path.join(directory, file))
@@ -197,6 +216,17 @@ class Dokumentasi(QtGui.QMainWindow, Ui_Main):
 		return counter
 
 
+	def openFile(self, reply):
+		if reply == 1:
+			try:
+				os.system('start ' + str(self.outputFolder.text()))
+				QtGui.QApplication.processEvents()
+			except Exception as e:
+				self.showDialog('error', 'Kesalahan', e.strerror)
+				return
+		return
+
+
 	def toggleLog(self):
 		if self.logVisible:
 			self.label_3.hide()
@@ -215,7 +245,7 @@ class Dokumentasi(QtGui.QMainWindow, Ui_Main):
 		self.logs.ensureCursorVisible()
 
 
-	def showDialog(self, type, title, text):
+	def showDialog(self, type, title, text, buttons = None, callback = None):
 		dialog = QtGui.QMessageBox()
 
 		if type == 'info':
@@ -230,24 +260,33 @@ class Dokumentasi(QtGui.QMainWindow, Ui_Main):
 			icon = QtGui.QMessageBox.Information
 
 		ico = QtGui.QIcon()
-		ico.addPixmap(QtGui.QPixmap(":/app.ico"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-
+		ico.addPixmap(QtGui.QPixmap(":/icon/folder.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
 		dialog.setIcon(icon)
 		dialog.setWindowTitle(title)
 		dialog.setWindowIcon(ico)
 		dialog.setText(text)
-		dialog.setStandardButtons(QtGui.QMessageBox.Ok)
-		dialog.exec_()
+
+		if buttons == None:
+			dialog.setStandardButtons(QtGui.QMessageBox.Ok)
+		else:
+			for button, role in buttons:
+				dialog.addButton(button, role)
+
+		reply = dialog.exec_()
+
+		if callable(callback):
+			callback(reply)
 
 
 	def closeEvent(self, event):
 		reply = QtGui.QMessageBox.question(self, 'Keluar',
-			"Apakah Anda yakin?", 'Batal', 'Ya')
+			"Sudah ngopi bro?", 'Belum', 'Sudah')
 
 		if reply == 1:
 			event.accept()
 		else:
 			event.ignore()
+			self.showDialog('info', 'Ngopi', 'Ngopi dulu bro...')
 
 if __name__ == '__main__':
 	main()
